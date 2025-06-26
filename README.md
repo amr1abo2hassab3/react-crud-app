@@ -1,36 +1,69 @@
-# React CRUD App
+# React + TypeScript + Vite
 
-## 📄 Project Description
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-**React CRUD App** is a visually organized and interactive web application built with **React**.  
-It allows users to easily manage a list of items through basic CRUD operations:
+Currently, two official plugins are available:
 
-- **Create**: Add new records with clean input forms.  
-- **Read**: Display existing records in a dynamic, styled layout.  
-- **Update**: Edit item details with smooth and intuitive interfaces.  
-- **Delete**: Remove records with confirmation and instant feedback.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-The application emphasizes a **well-organized and visually appealing user interface** using clean layouts, styled components, and smooth interactions.
+## Expanding the ESLint configuration
 
----
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 📌 Key Features
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-- Modern, clean, and user-friendly UI with responsive design.  
-- Real-time list updates and dynamic rendering.  
-- Organized, card-based or table-based layouts for better visualization.  
-- Modular, reusable, and scalable React components.  
-- Smooth animations and hover effects.
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
 
----
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-## 📌 Technologies Used
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-- **React**  
-- **JavaScript / TypeScript**  
-- **Tailwind CSS / CSS Modules / SCSS**  
-- **JSON Server** *(optional for mock API)*
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
----
-
-✨ **A clean and well-structured React app focusing on both functionality and visual presentation.**
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
