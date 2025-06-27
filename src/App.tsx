@@ -1,7 +1,8 @@
 import ProductCard from "./Components/ProductCard/ProductCard";
 import Button from "./Components/ui/Button";
+import Input from "./Components/ui/Input";
 import Modal from "./Components/ui/Modal";
-import { productList } from "./data";
+import { formInputsList, productList } from "./data";
 import { useState } from "react";
 
 const App = () => {
@@ -14,10 +15,28 @@ const App = () => {
   function closeModal() {
     setIsOpen(false);
   }
-  // render
+  // render product in user interface
   const renderProductList = productList.map((product) => (
     <ProductCard key={product.id} product={product} />
   ));
+  // render form input add new product
+  const renderFormInputsList = formInputsList.map((input) => (
+    <div key={input.id} className="flex flex-col">
+      <label
+        className="mb-[2px] text-sm font-medium text-gray-700"
+        htmlFor={input.id}
+      >
+        {input.label}
+      </label>
+      <Input
+        className="border-[1px] border-gray-300 shadow-md focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded-lg px-3 py-3 text-md"
+        type={input.type}
+        name={input.name}
+        id={input.id}
+      />
+    </div>
+  ));
+
   return (
     <main className="container mx-auto m-5 p-2">
       {/* Button open modal */}
@@ -30,17 +49,20 @@ const App = () => {
       </div>
       {/* componet modal reusable  */}
       <Modal isOpen={isOpen} closeModal={closeModal} title="ADD NEW PRODUCT ">
-        <div className="flex items-center space-x-2">
-          <Button className="bg-indigo-500 w-full  hover:bg-indigo-700 transition-all">
-            Submit{" "}
-          </Button>
-          <Button
-            onClick={closeModal}
-            className="bg-gray-500 w-full hover:bg-gray-700 transition-all "
-          >
-            Cancel
-          </Button>
-        </div>
+        <form className="space-y-3">
+          {renderFormInputsList}
+          <div className="flex items-center space-x-2">
+            <Button className="bg-indigo-500 w-full  hover:bg-indigo-700 transition-all">
+              Submit{" "}
+            </Button>
+            <Button
+              onClick={closeModal}
+              className="bg-gray-500 w-full hover:bg-gray-700 transition-all "
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>{" "}
       </Modal>
     </main>
   );
