@@ -9,7 +9,7 @@ const Button = ({ children, className, ...rest }: IProps) => {
   return (
     <button
       {...rest}
-      className={`${className} py-2 rounded-md text-white font-medium`}
+      className={`${className} py-2 rounded-md text-white font-medium cursor-pointer`}
     >
       {children}
     </button>
