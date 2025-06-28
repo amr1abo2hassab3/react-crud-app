@@ -2,13 +2,14 @@ import ProductCard from "./Components/ProductCard/ProductCard";
 import Button from "./Components/ui/Button";
 import Input from "./Components/ui/Input";
 import Modal from "./Components/ui/Modal";
-import { colors, formInputsList, productList } from "./data";
+import { categories, colors, formInputsList, productList } from "./data";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { IProduct } from "./interfaces";
 import { productValidation, type IproductValidation } from "./validation";
 import ErrorMessage from "./Components/ui/ErrorMessage";
 import CircleColor from "./Components/ui/CircleColor";
 import { v4 as uuid } from "uuid";
+import Select from "./Components/ui/Select";
 
 const App = () => {
   const defaultProductObj: IProduct = {
@@ -28,6 +29,7 @@ const App = () => {
   const [tempColors, setTempColors] = useState<string[]>([] as string[]);
   const [products, setProducts] = useState<IProduct[]>(productList);
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
+  const [selected, setSelected] = useState(categories[0]);
   const [errors, setErrors] = useState<IproductValidation>({
     title: "",
     description: "",
@@ -42,7 +44,14 @@ const App = () => {
   function closeModal(): void {
     setIsOpen(false);
     setProduct(defaultProductObj);
+    setErrors({
+      title: "",
+      description: "",
+      price: "",
+      imageURL: "",
+    });
     setTempColors([] as string[]);
+    setSelected(categories[0]);
   }
   // this function hadler change input
   function onChangeHandler(e: ChangeEvent<HTMLInputElement>): void {
@@ -80,8 +89,9 @@ const App = () => {
       setErrors(errorsReturned);
       return;
     }
+
     setProducts((prev) => [
-      { ...product, id: uuid(), colors: tempColors },
+      { ...product, id: uuid(), colors: tempColors, category: selected },
       ...prev,
     ]);
     closeModal();
@@ -135,6 +145,8 @@ const App = () => {
       {color}
     </span>
   ));
+
+  
   return (
     <main className="container mx-auto m-5 p-2">
       {/* Button open modal */}
@@ -155,12 +167,14 @@ const App = () => {
           <div className="flex items-center my-4 space-x-2 flex-wrap">
             {renderTempColors}
           </div>
+          <Select selected={selected} setSelected={setSelected} />
           <div className="flex items-center space-x-2">
             <Button className="bg-indigo-500 w-full  hover:bg-indigo-700 transition-all">
               Submit{" "}
             </Button>
             <Button
               onClick={closeModal}
+              type="button"
               className="bg-gray-500 w-full hover:bg-gray-700 transition-all "
             >
               Cancel

@@ -1,7 +1,9 @@
-export interface IproductValidation{ title: string;
+export
+  interface IproductValidation{
+    title: string;
     description: string;
     imageURL: string;
-    price: string;
+  price: string;
 }
     
 /**
@@ -14,7 +16,7 @@ export const productValidation = (product:IproductValidation) => {
         title: "",
         description: "",
         price: "",
-        imageURL:"" ,
+      imageURL: "",
     }
     const urlRegex = /^https?:\/\//;
 
@@ -46,7 +48,9 @@ export const productValidation = (product:IproductValidation) => {
     }
     else if (!/^\d+(\.\d+)?$/.test(product.price)) {
         errors.price = "Price must be a valid number";
-      }
+  }
+  
+ 
 
     return errors;
 }
