@@ -2,11 +2,12 @@ import ProductCard from "./Components/ProductCard/ProductCard";
 import Button from "./Components/ui/Button";
 import Input from "./Components/ui/Input";
 import Modal from "./Components/ui/Modal";
-import { formInputsList, productList } from "./data";
+import { colors, formInputsList, productList } from "./data";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { IProduct } from "./interfaces";
 import { productValidation, type IproductValidation } from "./validation";
 import ErrorMessage from "./Components/ui/ErrorMessage";
+import CircleColor from "./Components/ui/CircleColor";
 
 const App = () => {
   const defaultProductObj: IProduct = {
@@ -90,6 +91,14 @@ const App = () => {
       />
     </div>
   ));
+  // render Product Colors
+  const renderProductColors = colors.map((color) => (
+    <CircleColor
+      key={color}
+      color={color}
+      className="block w-5 h-5 rounded-full cursor-pointer my-1"
+    />
+  ));
 
   return (
     <main className="container mx-auto m-5 p-2">
@@ -105,6 +114,9 @@ const App = () => {
       <Modal isOpen={isOpen} closeModal={closeModal} title="ADD NEW PRODUCT ">
         <form className="space-y-3" onSubmit={handleSubmit}>
           {renderFormInputsList}
+          <div className="flex items-center my-4 space-x-2 flex-wrap">
+            {renderProductColors}
+          </div>
           <div className="flex items-center space-x-2">
             <Button className="bg-indigo-500 w-full  hover:bg-indigo-700 transition-all">
               Submit{" "}
