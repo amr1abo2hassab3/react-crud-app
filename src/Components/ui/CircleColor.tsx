@@ -1,10 +1,11 @@
-interface IProps {
+import type { HTMLAttributes } from "react";
+
+interface IProps extends HTMLAttributes<HTMLSpanElement> {
   color: string;
-  className?: string;
 }
 
-const CircleColor = ({ color, className }: IProps) => {
-  return <span className={className} style={{ backgroundColor: color }} />;
+const CircleColor = ({ color, ...rest }: IProps) => {
+  return <span style={{ backgroundColor: color }} {...rest} />;
 };
 
 export default CircleColor;

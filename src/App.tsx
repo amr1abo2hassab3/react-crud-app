@@ -22,8 +22,9 @@ const App = () => {
     },
   };
 
-  /* state   */
+  // <<<<<<<<<<<  state >>>>>>>>>>>>
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [tempColors, setTempColors] = useState<string[]>([] as string[]);
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
   const [errors, setErrors] = useState<IproductValidation>({
     title: "",
@@ -31,7 +32,8 @@ const App = () => {
     price: "",
     imageURL: "",
   });
-  // handler
+
+  // <<<<<<<<<<<  handler >>>>>>>>>>>>
   function openModal(): void {
     setIsOpen(true);
   }
@@ -64,6 +66,13 @@ const App = () => {
       return;
     }
   }
+  // this function add colors of product in array Tempcolor
+  function addColor(color: string) {
+    setTempColors((prev) => [...prev, color]);
+  }
+  console.log(tempColors);
+
+  // <<<<<<<<<<<  render >>>>>>>>>>>>
   // render product in user interface
   const renderProductList = productList.map((product) => (
     <ProductCard key={product.id} product={product} />
@@ -97,6 +106,9 @@ const App = () => {
       key={color}
       color={color}
       className="block w-5 h-5 rounded-full cursor-pointer my-1"
+      onClick={() => {
+        addColor(color);
+      }}
     />
   ));
 
