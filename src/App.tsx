@@ -68,7 +68,15 @@ const App = () => {
   }
   // this function add colors of product in array Tempcolor
   function addColor(color: string) {
-    setTempColors((prev) => [...prev, color]);
+    // handle if color include in state it will remove
+    if (tempColors.includes(color)) {
+      const newColors: string[] = tempColors.filter(
+        (item: string) => item !== color
+      );
+      setTempColors(newColors);
+    } else {
+      setTempColors((prev) => [...prev, color]);
+    }
   }
   console.log(tempColors);
 
@@ -111,7 +119,15 @@ const App = () => {
       }}
     />
   ));
-
+  const renderTempColors = tempColors.map((color: string) => (
+    <span
+      key={color}
+      className="text-white rounded"
+      style={{ backgroundColor: color }}
+    >
+      {color}
+    </span>
+  ));
   return (
     <main className="container mx-auto m-5 p-2">
       {/* Button open modal */}
@@ -128,6 +144,9 @@ const App = () => {
           {renderFormInputsList}
           <div className="flex items-center my-4 space-x-2 flex-wrap">
             {renderProductColors}
+          </div>
+          <div className="flex items-center my-4 space-x-2 flex-wrap">
+            {renderTempColors}
           </div>
           <div className="flex items-center space-x-2">
             <Button className="bg-indigo-500 w-full  hover:bg-indigo-700 transition-all">
