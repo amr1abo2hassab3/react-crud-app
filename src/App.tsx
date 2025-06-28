@@ -8,6 +8,7 @@ import type { IProduct } from "./interfaces";
 import { productValidation, type IproductValidation } from "./validation";
 import ErrorMessage from "./Components/ui/ErrorMessage";
 import CircleColor from "./Components/ui/CircleColor";
+import { v4 as uuid } from "uuid";
 
 const App = () => {
   const defaultProductObj: IProduct = {
@@ -25,6 +26,7 @@ const App = () => {
   // <<<<<<<<<<<  state >>>>>>>>>>>>
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [tempColors, setTempColors] = useState<string[]>([] as string[]);
+  const [products, setProducts] = useState<IProduct[]>(productList);
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
   const [errors, setErrors] = useState<IproductValidation>({
     title: "",
@@ -40,6 +42,7 @@ const App = () => {
   function closeModal(): void {
     setIsOpen(false);
     setProduct(defaultProductObj);
+    setTempColors([] as string[]);
   }
   // this function hadler change input
   function onChangeHandler(e: ChangeEvent<HTMLInputElement>): void {
@@ -49,6 +52,18 @@ const App = () => {
       ...errors,
       [name]: "",
     });
+  }
+  // this function add colors of product in array Tempcolor
+  function addColor(color: string) {
+    // handle if color include in state it will remove
+    if (tempColors.includes(color)) {
+      const newColors: string[] = tempColors.filter(
+        (item: string) => item !== color
+      );
+      setTempColors(newColors);
+    } else {
+      setTempColors((prev) => [...prev, color]);
+    }
   }
   // function handler validation data in input
   function handleSubmit(e: FormEvent<HTMLFormElement>): void {
@@ -65,24 +80,16 @@ const App = () => {
       setErrors(errorsReturned);
       return;
     }
+    setProducts((prev) => [
+      { ...product, id: uuid(), colors: tempColors },
+      ...prev,
+    ]);
+    closeModal();
   }
-  // this function add colors of product in array Tempcolor
-  function addColor(color: string) {
-    // handle if color include in state it will remove
-    if (tempColors.includes(color)) {
-      const newColors: string[] = tempColors.filter(
-        (item: string) => item !== color
-      );
-      setTempColors(newColors);
-    } else {
-      setTempColors((prev) => [...prev, color]);
-    }
-  }
-  console.log(tempColors);
 
   // <<<<<<<<<<<  render >>>>>>>>>>>>
   // render product in user interface
-  const renderProductList = productList.map((product) => (
+  const renderProductList = products.map((product) => (
     <ProductCard key={product.id} product={product} />
   ));
   // render form input add new product
