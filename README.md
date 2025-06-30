@@ -1,6 +1,4 @@
-Excellent, Amr — here’s a clean, clear **English README.md** you can use directly on your GitHub repo for this project:
 
----
 
 ## 📦 React CRUD Product Manager
 
