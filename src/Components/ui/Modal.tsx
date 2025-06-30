@@ -27,7 +27,7 @@ export default function Modal({ isOpen, title, children, closeModal }: IProps) {
               {title && (
                 <DialogTitle
                   as="h3"
-                  className="text-base/7 font-medium text-white"
+                  className="text-base/7 font-medium text-black"
                 >
                   {title}
                 </DialogTitle>
