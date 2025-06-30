@@ -269,9 +269,9 @@ const App = () => {
   };
 
   return (
-    <main className="container mx-auto m-5 p-2">
+    <main className="container mx-auto  p-2">
       {/* Button open modal */}
-      <Button className="bg-indigo-700 w-1/4" onClick={openModal}>
+      <Button className="bg-indigo-700 w-1/4 " onClick={openModal}>
         Add
       </Button>
       {/* render Data in user interface */}

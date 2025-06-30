@@ -39,7 +39,7 @@ const ProductCard = ({
   };
 
   return (
-    <div className="border rounded-md p-2 flex mx-auto flex-col max-w-sm md:max-w-lg">
+    <div className="border rounded-md p-2 flex mx-auto flex-col justify-between max-w-sm md:max-w-lg">
       <Image className="rounded-md h-[300px]" alt={title} src={imageURL} />
       <h3 className="text-lg font-semibold">{textSlicer(title, 25)}</h3>
       <p className="text-xs text-gray-500 break-words">

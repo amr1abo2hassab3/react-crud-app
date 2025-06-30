@@ -1,4 +1,4 @@
-import type { IFormInput, IProduct } from "../interfaces";
+import type { ICategory, IFormInput, IProduct } from "../interfaces";
 import { v4 as uuid } from "uuid";
 
 
